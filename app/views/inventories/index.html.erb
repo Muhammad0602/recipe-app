@@ -1,0 +1,8 @@
+<h1>Inventories</h1>
+
+<% @inventories.each do |inventory| %>
+  <div class="inventory-item">
+    <p>Inventory <%= inventory.id %>: <%= inventory.description %></p>
+    <%= link_to 'Remove', inventory, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div>
+<% end %>
