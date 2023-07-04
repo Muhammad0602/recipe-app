@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
-    validates :name, presence: true
+  validates :name, presence: true
 
-    has_many :inventory_food
-    has_many :recipe_food
+  has_many :inventory_food
+  has_many :recipe_food
 end
