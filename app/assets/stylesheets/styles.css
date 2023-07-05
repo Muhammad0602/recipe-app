@@ -8,6 +8,35 @@ body {
     padding: 0;
     margin: 0;
 }
+.nav {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav li {
+    margin: 0 10px;
+  }
+
+  .nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .nav a:hover {
+    background-color: #ddd;
+  }
 
 .center {
     text-align: center;
@@ -18,7 +47,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
+    margin-top: 5rem;
 }
 
 .form .form-input {

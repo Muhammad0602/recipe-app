@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <nav>
+    <nav class="nav">
       <ul>
         <li><%= link_to 'Foods', foods_path %></li>
         <li><%= link_to 'Users', users_path %></li>
@@ -20,8 +20,8 @@
         <li><%= link_to 'Inventory Food', inventory_foods_path %></li>
       </ul>
     </nav>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <p class="notice center"><%= notice %></p>
+    <p class="alert center"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
