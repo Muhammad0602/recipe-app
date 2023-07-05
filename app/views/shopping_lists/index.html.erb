@@ -1,0 +1,25 @@
+<h1>Shopping List</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shopping_list.each do |food, details| %>
+      <tr>
+        <td><%= food %></td>
+        <td><%= details[:quantity] %></td>
+        <td><%= number_to_currency(details[:price]) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td><b>Total</b></td>
+      <td></td>
+      <td><b><%= number_to_currency(@total_price) %></b></td>
+    </tr>
+  </tbody>
+</table>
