@@ -38,13 +38,12 @@ class RecipesController < ApplicationController
 
   def public_recipes
     @recipes = Recipe.includes(:user).where(public: true)
-  
+
     @shopping_lists = {}
     @recipes.each do |recipe|
       @shopping_lists[recipe.id] = generate_shopping_list(recipe)
     end
   end
-  
 
   def toggle_public
     @recipe = Recipe.find(params[:id])
@@ -59,7 +58,7 @@ class RecipesController < ApplicationController
   end
 
   def generate_shopping_list(recipe)
-    recipe_foods = RecipeFood.where(recipe: recipe)
+    recipe_foods = RecipeFood.where(recipe:)
 
     shopping_list = {}
     total_items = 0
@@ -71,7 +70,8 @@ class RecipesController < ApplicationController
       measurement_unit = food.measurement_unit
 
       if shopping_list[food.name].nil?
-        shopping_list[food.name] = { quantity: quantity, measurement_unit: measurement_unit, price: food.price * quantity, name: food.name }
+        shopping_list[food.name] =
+          { quantity:, measurement_unit:, price: food.price * quantity, name: food.name }
       else
         shopping_list[food.name][:quantity] += quantity
         shopping_list[food.name][:price] += food.price * quantity
@@ -81,7 +81,7 @@ class RecipesController < ApplicationController
       total_price += food.price * quantity
     end
 
-    return shopping_list, total_items, total_price
+    [shopping_list, total_items, total_price]
   end
 
   def recipe_params
