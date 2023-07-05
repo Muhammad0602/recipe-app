@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class="display-5">Public Recipes</h1>
+   
+  <ul class="list-group">
+    <% @recipes.each do |recipe| %>
+    <% shopping_list, total_items, total_price = @shopping_lists[recipe.id] %>
+    <p>Total items: <%= shopping_list.size %></p>
+  <p>Total price: <%= total_price %></p>
+      <li class="list-group-item d-flex justify-content-between">
+        <div class="col-4">
+          <%= link_to recipe.name, recipe_path(recipe.id), class: "text-decoration-none text-dark fw-bold me-3" %>
+          <p class="mb-0">By: <%= recipe.user.name %></p>
+        </div>
+        <div class="col-7">
+          <p class="mb-0"><%= recipe.description %></p>
+        </div>
+        <div class="col-1">
+          <% if user_signed_in? && current_user == recipe.user %>
+            <%= button_to "Remove", recipe, method: :delete, class: "btn btn-danger btn-sm", data: { turbo_confirm: "Are you sure you want to delete this recipe?" } %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
