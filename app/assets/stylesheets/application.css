@@ -13,3 +13,68 @@
  *= require_tree .
  *= require_self
  */
+
+.inventory-section,
+.new-inventory-section,
+.inventory-details-section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.inventory-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3%;
+    border: 2px solid black;
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.name-inventory a {
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    width: 150px;
+    color: black;
+}
+
+.button {
+    padding: 5px 10px;
+    background-color: gray;
+    color: white;
+    width: 10%;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.add-food {
+    text-align: right;
+    width: 7%;
+}
+
+.remove-link {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.inventory-description {
+    padding-bottom: 1rem;
+    color: black;
+    font-weight: bold;
+    width: 150px;
+}
+
+.horizontal-line {
+    border: 2px solid black;
+    width: 25%;
+}

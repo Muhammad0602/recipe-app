@@ -1,8 +1,8 @@
+<div class="inventory-details-section">
 <h1>Inventory <%= @inventory.id %></h1>
-
-<%= link_to 'Add Food', inventory_inventory_foods_path(@inventory) %>
-
-<table>
+<%= link_to 'Add Food', inventory_inventory_foods_path(@inventory), class:'button add-food' %>
+<hr class="horizontal-line">
+<table class="table-inventory">
   <thead>
     <tr>
       <th>Food</th>
@@ -25,3 +25,4 @@
 </table>
 
 <p><%= link_to 'Back to Inventories', inventories_path %></p>
+</div>
