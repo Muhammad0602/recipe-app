@@ -17,7 +17,9 @@
         <li><%= link_to 'Users', users_path %></li>
         <li><%= link_to 'Inventories', inventories_path %></li>
         <li><%= link_to 'Recipes', recipes_path %></li>
-        <li><%= link_to 'Inventory Food', inventory_foods_path %></li>
+        <li>
+          <%= link_to "Log Out", destroy_user_session_path, class: 'logout', 'data-turbo-method': :delete %>
+        </li>
       </ul>
     </nav>
     <p class="notice center"><%= notice %></p>
