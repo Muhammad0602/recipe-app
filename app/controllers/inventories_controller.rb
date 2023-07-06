@@ -29,8 +29,12 @@ class InventoriesController < ApplicationController
   end
 
   def destroy
-    @inventory.destroy
-    redirect_to inventories_url, notice: 'Inventory was successfully deleted.'
+    @inventory = current_user.inventories.find(params[:id])
+    if @inventory.destroy
+      redirect_to inventories_path, notice: 'Inventory was successfully deleted.'
+    else
+      redirect_to inventories_path, alert: 'Failed to delete inventory.'
+    end
   end
 
   private
@@ -46,6 +50,6 @@ class InventoriesController < ApplicationController
   end
 
   def inventory_params
-    params.require(:inventory).permit(:name)
+    params.require(:inventory).permit(:name, :description)
   end
 end

@@ -1,8 +1,17 @@
-<h1>Inventories</h1>
+<div class="inventory-section">
+<%= link_to 'Add New Inventory', new_inventory_path, class: 'button' %>
 
 <% @inventories.each do |inventory| %>
   <div class="inventory-item">
-    <p>Inventory <%= inventory.id %>: <%= inventory.description %></p>
-    <%= link_to 'Remove', inventory, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <div class="name-and-remove">
+      <p class="name-inventory"><%= link_to "Inventory #{inventory.id}", inventory_path(inventory) %></p>
+      <%= form_with(model: inventory, url: inventory_path(inventory), method: :delete, data: { confirm: 'Are you sure?' }) do |form| %>
+        <%= form.submit 'REMOVE', class: 'remove-link' %>
+      <% end %>
+    </div>
+    <div class="inventory-description">
+      <%= inventory.description %>
+    </div>
   </div>
 <% end %>
+</div>

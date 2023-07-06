@@ -1,14 +1,13 @@
-<h1>Inventory: <%= @inventory.name %></h1>
-
-<p><%= link_to 'Add Food', new_inventory_food_path(@inventory) %></p>
-
-<h2>Inventory Items:</h2>
-<table>
+<div class="inventory-details-section">
+<h1>Inventory <%= @inventory.id %></h1>
+<%= link_to 'Add Food', inventory_inventory_foods_path(@inventory), class:'button add-food' %>
+<hr class="horizontal-line">
+<table class="table-inventory">
   <thead>
     <tr>
-      <th>Food Name</th>
+      <th>Food</th>
       <th>Quantity</th>
-      <th></th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -16,10 +15,14 @@
       <tr>
         <td><%= inventory_food.food.name %></td>
         <td><%= inventory_food.quantity %></td>
-        <td><%= link_to 'Remove', inventory_food_path(inventory_food), method: :delete, data: { confirm: 'Are you sure you want to remove this item?' } %></td>
-      </tr>
+        <td><%= form_with(model: inventory_food, url: inventory_inventory_food_path(@inventory, inventory_food), method: :delete, local: true, data: { confirm: 'Are you sure you want to remove this item?' }) do |form| %>
+            <%= form.submit 'Remove', class:'remove-link'%>
+        <% end %>
+        </td>
+        </tr>
     <% end %>
   </tbody>
 </table>
 
 <p><%= link_to 'Back to Inventories', inventories_path %></p>
+</div>
