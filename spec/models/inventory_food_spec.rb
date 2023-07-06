@@ -3,11 +3,10 @@ require 'rails_helper'
 RSpec.describe InventoryFood, type: :model do
   let(:user) { User.create(name: 'Ahmad', email: 'user@example.com', password: 'password') }
   let(:food) { Food.create(name: 'Osh') }
-  let(:inventory) { Inventory.create(name: 'First', description: 'It is an inventory', user: user)}
-  subject { InventoryFood.create(quantity: 10, inventory: inventory, food: food)}
+  let(:inventory) { Inventory.create(name: 'First', description: 'It is an inventory', user:) }
+  subject { InventoryFood.create(quantity: 10, inventory:, food:) }
 
   describe 'validations' do
-
     it 'should have a name' do
       expect(subject).to be_valid
     end

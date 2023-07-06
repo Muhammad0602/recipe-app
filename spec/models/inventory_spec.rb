@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Inventory, type: :model do
   let(:user) { User.create(name: 'Ahmad', email: 'user@example.com', password: 'password') }
-  subject { Inventory.create(name: 'First', description: 'It is an inventory', user: user) }
+  subject { Inventory.create(name: 'First', description: 'It is an inventory', user:) }
 
   describe 'validations' do
     it 'should have a name' do
