@@ -1,17 +1,48 @@
-<h1>Recipe: <%=@recipe.name%></h1>
-<h2>Preparation time:<%=@recipe.preparation_time%></h2>
-<h2>Cooking time: <%=@recipe.cooking_time%></h2>
+<h1>Recipe: <%= @recipe.name %></h1>
+<h2>Preparation time: <%= @recipe.preparation_time %></h2>
+<h2>Cooking time: <%= @recipe.cooking_time %></h2>
 <h3>Public <%= check_box_tag "public", "1", @recipe.public %></h3>
 <% if current_user && @recipe.user == current_user %>
-  <%= button_to " Make #{@recipe.public ? 'Private' : 'Public'}", toggle_public_recipe_path(@recipe), method: :put, class: 'btn btn-primary' %>
+  <%= button_to(toggle_public_recipe_path(@recipe), method: :put, class: 'btn btn-primary') do %>
+    <%= @recipe.public ? 'Make Private' : 'Make Public' %>
+  <% end %>
 <% end %>
 
-<h3>Steps go here: <p><%=@recipe.description%></p></h3>
+<h3>Steps go here: <p><%= @recipe.description %></p></h3>
 
 <%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
-<%= link_to "Generate Shopping List", recipe_shopping_list_path(@recipe), class: "btn btn-primary" %>
+<button id="generate-list-button" class="btn btn-primary">Generate Shopping List</button>
 
+<%= render partial: "recipe_foods/recipe_foods", locals: { recipe: @recipe } %>
 
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <h2>Generating Shopping List</h2>
+    <p>Choose an inventory to use:</p>
+    <%= form_with(model: @recipe, url: recipe_shopping_list_path(@recipe)) do |form| %>
+      <div class="inventory-select">
+      <%= form.select :inventory_id, options_for_select(@inventories.map { |inventory| ["Inventory #{inventory.id}", inventory.id] }), prompt: '-- Select inventory --' %>
+      </div>
+      <div class="modal-actions">
+        <%= form.submit 'Generate', class: 'btn btn-primary' %>
+        <button id="cancel-button" class="btn btn-secondary">Cancel</button>
+      </div>
+    <% end %>
+  </div>
+</div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var generateListButton = document.getElementById('generate-list-button');
+    var modal = document.getElementById('myModal');
+    var cancelButton = document.getElementById('cancel-button');
 
-<%= render partial: "recipe_foods/recipe_foods", locals: { recipe: @recipe}%>
+    generateListButton.addEventListener('click', function() {
+      modal.style.display = 'block';
+    });
+
+    cancelButton.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+  });
+</script>

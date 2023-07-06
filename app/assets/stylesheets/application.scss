@@ -119,3 +119,40 @@ tr:nth-child(even) {
 .food-options .field:not(:last-child) {
   margin-bottom: 1rem;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-actions {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.modal-actions .btn {
+  margin-left: 5px;
+}
+
+.modal-actions .btn-secondary {
+  background-color: gray;
+}
+
