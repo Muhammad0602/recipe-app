@@ -16,7 +16,8 @@
 
 .inventory-section,
 .new-inventory-section,
-.inventory-details-section {
+.inventory-details-section,
+.adding-food-section {
     padding-top: 1rem;
     padding-bottom: 1rem;
     display: flex;
@@ -78,3 +79,41 @@
     border: 2px solid black;
     width: 25%;
 }
+
+.table-inventory {
+    border-collapse: collapse;
+    width: 40%;
+    border: 1px solid black;
+  }
+
+  th {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
+  td {
+    padding: 8px;
+    text-align: left;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  }
+
+tr {
+    border: none;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.food-options {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.food-options .field:not(:last-child) {
+    margin-bottom: 1rem;
+  }
