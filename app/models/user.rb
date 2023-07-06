@@ -6,6 +6,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
-  has_many :inventory, foreign_key: :user_id
-  has_many :recipe, foreign_key: :user_id
+  has_many :inventories, foreign_key: :user_id
+  has_many :recipes, foreign_key: :user_id
 end
