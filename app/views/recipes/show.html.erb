@@ -24,8 +24,8 @@
       <%= form.select :inventory_id, options_for_select(@inventories.map { |inventory| ["Inventory #{inventory.id}", inventory.id] }), prompt: '-- Select inventory --' %>
       </div>
       <div class="modal-actions">
-        <%= form.submit 'Generate', class: 'btn btn-primary' %>
-        <button id="cancel-button" class="btn btn-secondary">Cancel</button>
+      <%= link_to "Generate", recipe_shopping_list_path(@recipe), class: "btn btn-primary", id: "generate-list-button" %>
+      <button id="cancel-button" class="btn btn-secondary">Cancel</button>
       </div>
     <% end %>
   </div>
