@@ -19,16 +19,16 @@ RSpec.describe 'Foods', type: :system do
       end
     end
 
-    it 'shows the correct unit' do 
-      foods.each do |food| 
+    it 'shows the correct unit' do
+      foods.each do |food|
         expect(page).to have_content(food.measurement_unit)
       end
     end
 
-    it 'shows the correct price' do 
-        foods.each do |food| 
-          expect(page).to have_content(food.price)
-        end
+    it 'shows the correct price' do
+      foods.each do |food|
+        expect(page).to have_content(food.price)
       end
+    end
   end
 end
