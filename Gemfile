@@ -30,8 +30,8 @@ gem 'stimulus-rails'
 # Devise for authentication
 gem 'devise'
 
-# Using Scss for styling
-# gem 'sassc'
+gem 'rails-controller-testing'
+
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
