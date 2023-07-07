@@ -7,6 +7,8 @@ class RecipesController < ApplicationController
   # GET /recipes/1
   def show
     @recipe = Recipe.find(params[:id])
+    @inventories = current_user.inventories
+    @selected_inventory_id = params[:inventory_id] || @inventories.first&.id
   end
 
   # GET /recipes/new
@@ -41,7 +43,7 @@ class RecipesController < ApplicationController
 
     @shopping_lists = {}
     @recipes.each do |recipe|
-      @shopping_lists[recipe.id] = generate_shopping_list(recipe)
+      @shopping_lists[recipe.id] = shopping_list()
     end
   end
 
@@ -53,35 +55,26 @@ class RecipesController < ApplicationController
 
   def shopping_list
     @recipe = Recipe.find(params[:id])
-    @shopping_list, @total_items, @total_price = generate_shopping_list(@recipe)
-    render 'shopping_lists/index'
-  end
-
-  def generate_shopping_list(recipe)
-    recipe_foods = RecipeFood.where(recipe:)
-
-    shopping_list = {}
-    total_items = 0
-    total_price = 0
-
+    @inventory = Inventory.find(params[:inventory_id])
+    recipe_foods = @recipe.recipe_foods
+    inventory_foods = @inventory.inventory_foods.index_by(&:food_id)
+    @missing_items = {}
+    @total_price = 0
     recipe_foods.each do |recipe_food|
       food = Food.find(recipe_food.food_id)
-      quantity = recipe_food.quantity
-      measurement_unit = food.measurement_unit
+      quantity_needed = recipe_food.quantity
+      inventory_food = inventory_foods[food.id]
+      next if inventory_food.present? && inventory_food.quantity >= quantity_needed
 
-      if shopping_list[food.name].nil?
-        shopping_list[food.name] =
-          { quantity:, measurement_unit:, price: food.price, name: food.name }
-      else
-        shopping_list[food.name][:quantity] += quantity
-        shopping_list[food.name][:price] += food.price
-      end
-
-      total_items += quantity
-      total_price += food.price
+      missing_quantity = [quantity_needed - (inventory_food&.quantity || 0), 0].max
+      price = food.price * missing_quantity
+      @missing_items[food.name] = { quantity: missing_quantity, price: }
+      @total_price += price
     end
-
-    [shopping_list, total_items, total_price]
+    @amount_of_food_to_buy = @missing_items.length
+    render 'shopping_lists/index',
+           locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe, total_value_of_food_needed: @total_price,
+                     inventory: @inventory }
   end
 
   def recipe_params
