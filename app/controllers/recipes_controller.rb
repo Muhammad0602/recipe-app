@@ -90,26 +90,6 @@ class RecipesController < ApplicationController
       inventory: @inventory
     }
   end
-    recipe_foods = @recipe.recipe_foods
-    inventory_foods = @inventory.inventory_foods.index_by(&:food_id)
-    @missing_items = {}
-    @total_price = 0
-    recipe_foods.each do |recipe_food|
-      food = Food.find(recipe_food.food_id)
-      quantity_needed = recipe_food.quantity
-      inventory_food = inventory_foods[food.id]
-      next if inventory_food.present? && inventory_food.quantity >= quantity_needed
-
-      missing_quantity = [quantity_needed - (inventory_food&.quantity || 0), 0].max
-      price = food.price * missing_quantity
-      @missing_items[food.name] = { quantity: missing_quantity, price: }
-      @total_price += price
-    end
-    @amount_of_food_to_buy = @missing_items.length
-    render 'shopping_lists/index',
-           locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe, total_value_of_food_needed: @total_price,
-                     inventory: @inventory }
-  end
  # rubocop:enable Metrics/MethodLength
 
   def recipe_params
