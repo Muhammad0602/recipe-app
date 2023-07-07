@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Quantity</th>
       <th>Value</th>
       <th>Actions</th>
     </tr>
@@ -10,6 +11,7 @@
     <% @recipe.recipe_foods.each do |recipe_food| %>
       <tr>
         <td><%= recipe_food.food.name %></td>
+        <td><%= "#{recipe_food.quantity} #{recipe_food.food.measurement_unit}" %></td>
         <td><%= recipe_food.food.price %></td>
         <td>
           <%= link_to "Modify", edit_recipe_recipe_food_path(@recipe, recipe_food), class: "btn btn-primary" %>

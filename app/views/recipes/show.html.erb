@@ -10,9 +10,8 @@
 
 <h3>Steps go here: <p><%= @recipe.description %></p></h3>
 
-<%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
 <button id="generate-list-button" class="btn btn-primary">Generate Shopping List</button>
-
+<%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
 <%= render partial: "recipe_foods/recipe_foods", locals: { recipe: @recipe } %>
 
 <div id="myModal" class="modal">
@@ -44,6 +43,7 @@
 
     generateModalListButton.addEventListener('click', function() {
       var selectedInventoryId = inventorySelect.value;
+      console.log("Selected Inventory ID: " + selectedInventoryId); // Print the selected inventory ID
       var shoppingListUrl = "<%= recipe_shopping_list_path(@recipe) %>";
       var modifiedUrl = shoppingListUrl + '?inventory_id=' + selectedInventoryId;
       window.location.href = modifiedUrl;

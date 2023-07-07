@@ -58,7 +58,7 @@ class RecipesController < ApplicationController
     @inventory = Inventory.find(params[:inventory_id])
   
     recipe_foods = @recipe.recipe_foods
-    inventory_foods = @inventory.inventory_foods
+    inventory_foods = @inventory.inventory_foods.index_by(&:food_id)
   
     @missing_items = {}
     @total_price = 0
@@ -67,10 +67,10 @@ class RecipesController < ApplicationController
       food = Food.find(recipe_food.food_id)
       quantity_needed = recipe_food.quantity
   
-      inventory_food = inventory_foods.find_by(food_id: food.id)
+      inventory_food = inventory_foods[food.id]
       next if inventory_food.present? && inventory_food.quantity >= quantity_needed
   
-      missing_quantity = quantity_needed - (inventory_food&.quantity || 0)
+      missing_quantity = [quantity_needed - (inventory_food&.quantity || 0), 0].max # Ensures a non-negative quantity
       price = food.price * missing_quantity
   
       @missing_items[food.name] = {
@@ -88,7 +88,7 @@ class RecipesController < ApplicationController
       total_value_of_food_needed: @total_price,
       inventory: @inventory
     }
-  end  
+  end    
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)

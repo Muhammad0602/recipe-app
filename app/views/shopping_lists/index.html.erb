@@ -1,5 +1,24 @@
-<h1>Shopping List</h1>
-<table class="table">
+<style>
+  .center {
+    text-align: center;
+  }
+  .item {
+    display: inline-block;
+    margin-right: 20px;
+  }
+</style>
+
+<h1 class="center">Shopping List</h1>
+<div class="center">
+  <p class="item">Amount of food to buy: <%= @amount_of_food_to_buy %></p>
+  <p class="item">Recipe: <%= link_to "Recipe #{@recipe.id}", recipe_path(@recipe) %></p>
+</div>
+<div class="center">
+  <p class="item">Total value of food needed: <%= number_to_currency(@total_price) %></p>
+  <p class="item">Inventory: <%= link_to "Inventory #{@inventory.id}", inventory_path(@inventory) %></p>
+</div>
+
+<table class="table center">
   <thead>
     <tr>
       <th>Name</th>
@@ -15,11 +34,5 @@
         <td><%= number_to_currency(details[:price]) %></td>
       </tr>
     <% end %>
-    <tr>
-      <td></td>
-      <td><b>Total</b></td>
-      <td></td>
-      <td><b><%= number_to_currency(@total_price) %></b></td>
-    </tr>
   </tbody>
 </table>
