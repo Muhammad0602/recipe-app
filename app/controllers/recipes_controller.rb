@@ -90,7 +90,7 @@ class RecipesController < ApplicationController
       inventory: @inventory
     }
   end
- # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
