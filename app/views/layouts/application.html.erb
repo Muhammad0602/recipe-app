@@ -11,15 +11,18 @@
   </head>
 
   <body>
-    <nav class="nav">
-      <ul>
-        <li><%= link_to 'Foods', foods_path %></li>
-        <li><%= link_to 'Users', users_path %></li>
-        <li><%= link_to 'Inventories', inventories_path %></li>
-        <li><%= link_to 'Recipes', my_recipes_path %></li>
-        <li><%= link_to 'Inventory Food', inventories_path %></li>
-      </ul>
-    </nav>
+    <% if user_signed_in? %>
+      <nav class="nav">
+        <ul>
+          <li><%= link_to 'Public Recipes', public_recipes_path %></li>
+          <li><%= link_to 'Inventories', inventories_path %></li>
+          <li><%= link_to 'Recipes', my_recipes_path %></li>
+          <li>
+            <%= link_to "Log Out", destroy_user_session_path, class: 'logout', 'data-turbo-method': :delete %>
+          </li>
+        </ul>
+      </nav>
+    <% end %>
     <p class="notice center"><%= notice %></p>
     <p class="alert center"><%= alert %></p>
     <%= yield %>
