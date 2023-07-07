@@ -21,11 +21,11 @@
     <p>Choose an inventory to use:</p>
     <%= form_with(model: @recipe, url: recipe_shopping_list_path(@recipe)) do |form| %>
       <div class="inventory-select">
-      <%= form.select :inventory_id, options_for_select(@inventories.map { |inventory| ["Inventory #{inventory.id}", inventory.id] }), prompt: '-- Select inventory --' %>
+        <%= form.select :inventory_id, options_for_select(@inventories.map { |inventory| ["Inventory #{inventory.id}", inventory.id] }), prompt: '-- Select inventory --', id: 'recipe_inventory_id' %>
       </div>
       <div class="modal-actions">
-      <%= link_to "Generate", recipe_shopping_list_path(@recipe), class: "btn btn-primary", id: "generate-list-button" %>
-      <button id="cancel-button" class="btn btn-secondary">Cancel</button>
+        <button type="button" id="generate-modal-list-button" class="btn btn-primary">Generate</button>
+        <button id="cancel-button" class="btn btn-secondary">Cancel</button>
       </div>
     <% end %>
   </div>
@@ -34,14 +34,25 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var generateListButton = document.getElementById('generate-list-button');
-    var modal = document.getElementById('myModal');
-    var cancelButton = document.getElementById('cancel-button');
+    var generateModalListButton = document.getElementById('generate-modal-list-button');
+    var inventorySelect = document.getElementById('recipe_inventory_id');
 
     generateListButton.addEventListener('click', function() {
+      var modal = document.getElementById('myModal');
       modal.style.display = 'block';
     });
 
+    generateModalListButton.addEventListener('click', function() {
+      var selectedInventoryId = inventorySelect.value;
+      var shoppingListUrl = "<%= recipe_shopping_list_path(@recipe) %>";
+      var modifiedUrl = shoppingListUrl + '?inventory_id=' + selectedInventoryId;
+      window.location.href = modifiedUrl;
+    });
+
+    var cancelButton = document.getElementById('cancel-button');
+
     cancelButton.addEventListener('click', function() {
+      var modal = document.getElementById('myModal');
       modal.style.display = 'none';
     });
   });

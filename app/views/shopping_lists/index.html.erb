@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @shopping_list.each do |food, details| %>
+    <% @missing_items.each do |food, details| %>
       <tr>
         <td><%= food %></td>
         <td><%= details[:quantity] %></td>
