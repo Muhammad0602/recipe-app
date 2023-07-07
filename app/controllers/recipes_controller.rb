@@ -74,7 +74,7 @@ class RecipesController < ApplicationController
     @amount_of_food_to_buy = @missing_items.length
     render 'shopping_lists/index',
            locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe,
-            total_value_of_food_needed: @total_price, inventory: @inventory }
+                     total_value_of_food_needed: @total_price, inventory: @inventory }
   end
 
   def recipe_params
