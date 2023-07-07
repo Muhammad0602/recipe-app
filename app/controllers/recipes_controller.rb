@@ -43,7 +43,7 @@ class RecipesController < ApplicationController
 
     @shopping_lists = {}
     @recipes.each do |recipe|
-      @shopping_lists[recipe.id] = generate_shopping_list(recipe)
+      @shopping_lists[recipe.id] = shopping_list
     end
   end
 
@@ -73,8 +73,8 @@ class RecipesController < ApplicationController
     end
     @amount_of_food_to_buy = @missing_items.length
     render 'shopping_lists/index',
-           locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe, total_value_of_food_needed: @total_price,
-                     inventory: @inventory }
+           locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe,
+                     total_value_of_food_needed: @total_price, inventory: @inventory }
   end
 
   def recipe_params
