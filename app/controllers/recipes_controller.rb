@@ -97,5 +97,4 @@ class RecipesController < ApplicationController
     end
     total_price
   end
-
 end
