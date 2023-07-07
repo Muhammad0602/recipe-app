@@ -40,11 +40,7 @@ class RecipesController < ApplicationController
 
   def public_recipes
     @recipes = Recipe.includes(:user).where(public: true)
-
-    @shopping_lists = {}
-    @recipes.each do |recipe|
-      @shopping_lists[recipe.id] = shopping_list
-    end
+    @recipe_totals = calculate_recipe_totals(@recipes)
   end
 
   def toggle_public
@@ -79,5 +75,26 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
+  end
+
+  def calculate_recipe_totals(recipes)
+    recipe_totals = {}
+    recipes.each do |recipe|
+      total_items = recipe.recipe_foods.sum(:quantity)
+      total_price = calculate_total_price(recipe)
+      recipe_totals[recipe.id] = [total_items, total_price]
+    end
+    recipe_totals
+  end
+
+  def calculate_total_price(recipe)
+    total_price = 0
+    recipe.recipe_foods.each do |recipe_food|
+      food = Food.find(recipe_food.food_id)
+      quantity_needed = recipe_food.quantity
+      price = food.price * quantity_needed
+      total_price += price
+    end
+    total_price
   end
 end
