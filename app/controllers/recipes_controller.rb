@@ -65,14 +65,17 @@ class RecipesController < ApplicationController
       quantity_needed = recipe_food.quantity
       inventory_food = inventory_foods[food.id]
       next if inventory_food.present? && inventory_food.quantity >= quantity_needed
+
       missing_quantity = [quantity_needed - (inventory_food&.quantity || 0), 0].max
       price = food.price * missing_quantity
-      @missing_items[food.name] = { quantity: missing_quantity, price: price }
+      @missing_items[food.name] = { quantity: missing_quantity, price: }
       @total_price += price
     end
     @amount_of_food_to_buy = @missing_items.length
-    render 'shopping_lists/index', locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe, total_value_of_food_needed: @total_price, inventory: @inventory }
-  end  
+    render 'shopping_lists/index',
+           locals: { amount_of_food_to_buy: @amount_of_food_to_buy, recipe: @recipe, total_value_of_food_needed: @total_price,
+                     inventory: @inventory }
+  end
 
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
