@@ -41,29 +41,26 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('turbo:load', function() {
     var generateListButton = document.getElementById('generate-list-button');
     var generateModalListButton = document.getElementById('generate-modal-list-button');
     var inventorySelect = document.getElementById('recipe_inventory_id');
 
-    generateListButton.addEventListener('click', function() {
-      var modal = document.getElementById('myModal');
-      modal.style.display = 'block';
-    });
+    if (generateListButton) {
+      generateListButton.addEventListener('click', function() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'block';
+      });
+    }
 
-    generateModalListButton.addEventListener('click', function() {
-      var selectedInventoryId = inventorySelect.value;
-      console.log("Selected Inventory ID: " + selectedInventoryId); // Print the selected inventory ID
-      var shoppingListUrl = "<%= recipe_shopping_list_path(@recipe) %>";
-      var modifiedUrl = shoppingListUrl + '?inventory_id=' + selectedInventoryId;
-      window.location.href = modifiedUrl;
-    });
-
-    var cancelButton = document.getElementById('cancel-button');
-
-    cancelButton.addEventListener('click', function() {
-      var modal = document.getElementById('myModal');
-      modal.style.display = 'none';
-    });
+    if (generateModalListButton) {
+      generateModalListButton.addEventListener('click', function() {
+        var selectedInventoryId = inventorySelect.value;
+        console.log("Selected Inventory ID: " + selectedInventoryId); // Print the selected inventory ID
+        var shoppingListUrl = "<%= recipe_shopping_list_path(@recipe) %>";
+        var modifiedUrl = shoppingListUrl + '?inventory_id=' + selectedInventoryId;
+        Turbolinks.visit(modifiedUrl); // Use Turbolinks to navigate to the shopping list page
+      });
+    }
   });
 </script>
