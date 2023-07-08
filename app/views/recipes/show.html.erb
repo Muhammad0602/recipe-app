@@ -1,17 +1,27 @@
-<h1>Recipe: <%= @recipe.name %></h1>
-<h2>Preparation time: <%= @recipe.preparation_time %></h2>
-<h2>Cooking time: <%= @recipe.cooking_time %></h2>
-<h3>Public <%= check_box_tag "public", "1", @recipe.public %></h3>
+<h1 class="text-center">Recipe: <%= @recipe.name %></h1>
+<div class="d-flex container justify-content-between gap-5">
+  <h2 class="text-nowrap">Preparation time: <%= @recipe.preparation_time %> Minutes</h2>
+  <div class="d-flex w-100 justify-content-end">
+  <h3>Public <%= check_box_tag "public", "1", @recipe.public %></h3>
 <% if current_user && @recipe.user == current_user %>
   <%= button_to(toggle_public_recipe_path(@recipe), method: :put, class: 'btn btn-primary') do %>
     <%= @recipe.public ? 'Make Private' : 'Make Public' %>
   <% end %>
 <% end %>
+  </div>
+  
+</div>
+<div class="container">
+  <h2>Cooking time: <%= @recipe.cooking_time %> Minutes</h2>
 
-<h3>Steps go here: <p><%= @recipe.description %></p></h3>
+  <h3 class="d-flex">Steps go here: <p><%= @recipe.description %></p></h3>
+</div>
 
-<button id="generate-list-button" class="btn btn-primary">Generate Shopping List</button>
-<%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
+<div class="d-flex justify-content-between container">
+  <button id="generate-list-button" class="btn btn-primary my-3">Generate Shopping List</button>
+  <%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
+</div>
+
 <%= render partial: "recipe_foods/recipe_foods", locals: { recipe: @recipe } %>
 
 <div id="myModal" class="modal">

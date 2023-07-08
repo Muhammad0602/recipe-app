@@ -6,7 +6,7 @@
       <% total_items, total_price = @recipe_totals[recipe.id] %>
       <li class="list-group-item d-flex justify-content-between">
         <div class="col-4">
-          <h5><%= recipe.name %></h5>
+          <%= link_to recipe.name, recipe_path(recipe.id), class: "text-decoration-none text-dark fw-bold me-3" %>
           <p class="mb-0">By: <%= recipe.user.name %></p>
         </div>
         <div class="col-7">
