@@ -2,13 +2,20 @@
 
 <h1>Foods</h1>
 
-<div id="foods">
-  <% @foods.each do |food| %>
-    <%= render food %>
-    <p>
-      <%= link_to "Show this food", food %>
-    </p>
-  <% end %>
-</div>
+<%= link_to "Add food", new_food_path, class: "add-link" %>
 
-<%= link_to "New food", new_food_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Foods</th>
+      <th>Measurement unit</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @foods.each do |food| %>
+      <%= render partial: 'food', locals: { food: food } %>
+    <% end %>
+  </tbody>
+</table>
