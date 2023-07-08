@@ -1,0 +1,13 @@
+<div class="new-inventory-section">
+<h1>New Inventory</h1>
+
+<%= form_with(model: @inventory, url: inventories_path, method: :post) do |form| %>
+  <div class="inventory-description">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <%= form.submit 'Create Inventory' %>
+<% end %>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="adding-food-section">
+<h1>Adding Food</h1>
+<div class="food-options">
+<%= form_with(model: [@inventory, InventoryFood.new], url: inventory_inventory_foods_path(@inventory), local: false) do |form| %>
+  <div class="field">
+    <%= form.label :food_id %>
+    <%= form.select :food_id, options_for_select(@foods.map { |food| [food.name, food.id] }), prompt: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Add Food' %>
+  </div>
+<% end %>
+</div>
+<p><%= link_to 'Back to Inventory', inventory_path(@inventory) %></p>
+</div>

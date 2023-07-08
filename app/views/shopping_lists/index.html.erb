@@ -1,0 +1,38 @@
+<style>
+  .center {
+    text-align: center;
+  }
+  .item {
+    display: inline-block;
+    margin-right: 20px;
+  }
+</style>
+
+<h1 class="center">Shopping List</h1>
+<div class="center">
+  <p class="item">Amount of food to buy: <%= @amount_of_food_to_buy %></p>
+  <p class="item">Recipe: <%= link_to "Recipe #{@recipe.id}", recipe_path(@recipe) %></p>
+</div>
+<div class="center">
+  <p class="item">Total value of food needed: <%= number_to_currency(@total_price) %></p>
+  <p class="item">Inventory: <%= link_to "Inventory #{@inventory.id}", inventory_path(@inventory) %></p>
+</div>
+
+<table class="table center">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @missing_items.each do |food, details| %>
+      <tr>
+        <td><%= food %></td>
+        <td><%= details[:quantity] %></td>
+        <td><%= number_to_currency(details[:price]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

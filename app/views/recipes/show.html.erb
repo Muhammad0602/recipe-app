@@ -1,0 +1,66 @@
+<h1 class="text-center">Recipe <%= @recipe.id %></h1>
+<div class="d-flex container justify-content-between gap-5">
+  <h2 class="text-nowrap">Preparation time: <%= @recipe.preparation_time %> Minutes</h2>
+  <div class="d-flex w-100 justify-content-end">
+  <h3>Public <%= check_box_tag "public", "1", @recipe.public %></h3>
+<% if current_user && @recipe.user == current_user %>
+  <%= button_to(toggle_public_recipe_path(@recipe), method: :put, class: 'btn btn-primary') do %>
+    <%= @recipe.public ? 'Make Private' : 'Make Public' %>
+  <% end %>
+<% end %>
+  </div>
+  
+</div>
+<div class="container">
+  <h2>Cooking time: <%= @recipe.cooking_time %> Minutes</h2>
+
+  <h3 class="d-flex">Steps go here: <p><%= @recipe.description %></p></h3>
+</div>
+
+<div class="d-flex justify-content-between container">
+  <button id="generate-list-button" class="btn btn-primary my-3">Generate Shopping List</button>
+  <%= link_to "Add Ingredients", new_recipe_recipe_food_path(@recipe), class: "btn btn-success my-3" %>
+</div>
+
+<%= render partial: "recipe_foods/recipe_foods", locals: { recipe: @recipe } %>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <h2>Generating Shopping List</h2>
+    <p>Choose an inventory to use:</p>
+    <%= form_with(model: @recipe, url: recipe_shopping_list_path(@recipe)) do |form| %>
+      <div class="inventory-select">
+        <%= form.select :inventory_id, options_for_select(@inventories.map { |inventory| ["Inventory #{inventory.id}", inventory.id] }), prompt: '-- Select inventory --', id: 'recipe_inventory_id' %>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="generate-modal-list-button" class="btn btn-primary">Generate</button>
+        <button id="cancel-button" class="btn btn-secondary">Cancel</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    var generateListButton = document.getElementById('generate-list-button');
+    var generateModalListButton = document.getElementById('generate-modal-list-button');
+    var inventorySelect = document.getElementById('recipe_inventory_id');
+
+    if (generateListButton) {
+      generateListButton.addEventListener('click', function() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'block';
+      });
+    }
+
+    if (generateModalListButton) {
+      generateModalListButton.addEventListener('click', function() {
+        var selectedInventoryId = inventorySelect.value;
+        console.log("Selected Inventory ID: " + selectedInventoryId); // Print the selected inventory ID
+        var shoppingListUrl = "<%= recipe_shopping_list_path(@recipe) %>";
+        var modifiedUrl = shoppingListUrl + '?inventory_id=' + selectedInventoryId;
+        Turbolinks.visit(modifiedUrl); // Use Turbolinks to navigate to the shopping list page
+      });
+    }
+  });
+</script>

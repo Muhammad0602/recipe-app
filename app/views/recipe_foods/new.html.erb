@@ -1,0 +1,17 @@
+<h1> Add ingredients for Recipe </h1>
+
+<%= form_for [@recipe, @recipe_food] do |f| %>
+<div class="form-group">
+    <%= f.label :food_id, "Select a Food" %>
+    <%= f.collection_select :food_id, Food.all, :id, :name, prompt: "Select a Food" %>
+</div>
+
+<div class="form-group">
+    <%= f.label :quantity, "Quantity" %>
+    <%= f.number_field :quantity, class: "form-control" %>
+</div>
+
+<%= f.submit "Add Food to recipe", class: "btn btn-success"%>
+<% end %>
+
+<%= link_to "Back", @recipe, class: "btn btn-primary" %>

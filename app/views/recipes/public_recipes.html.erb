@@ -1,0 +1,19 @@
+<div class="container">
+  <h1 class="display-5">Public Recipes</h1>
+   
+  <ul class="list-group">
+    <% @recipes.each do |recipe| %>
+      <% total_items, total_price = @recipe_totals[recipe.id] %>
+      <li class="list-group-item d-flex justify-content-between">
+        <div class="col-4">
+          <%= link_to recipe.name, recipe_path(recipe.id), class: "text-decoration-none text-dark fw-bold me-3" %>
+          <p class="mb-0">By: <%= recipe.user.name %></p>
+        </div>
+        <div class="col-7">
+          <p class="mb-0">Total Items: <%= total_items %></p>
+          <p class="mb-0">Total Price: <%= total_price %></p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
